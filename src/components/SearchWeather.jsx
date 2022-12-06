@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 
 const SearchWeather = () =>  {
     const  [search, setSearch] = useState("london")
@@ -6,19 +6,22 @@ const SearchWeather = () =>  {
     const [input, setInput] = useState("")
     let componentMounted = true;
 
-    useEffect(() => {
+
     const  featchWeather = async () => {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=0f355cac6253a891100617c2a88c70da`);
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=0f355cac6253a891100617c2a88c70da`
+      const response = await fetch(url);
+      const resJson = await response.json();
+      return resJson;
+    }
+
+    useEffect(() => {
+  
         if(componentMounted){
-            setData(await response.json());
+            setData(resJson);
             console.log(data)
         }
-        return () => {
-           componentMounted = false;  
-        }
-    }
-     featchWeather();
-    }, [])
+       featchWeather()
+    }, [search])
     
 
   return (
@@ -49,7 +52,7 @@ const SearchWeather = () =>  {
                   </div>
                 </form>
                 <div className="bg-dark bg-opacity-50 py-3">
-                <h2 className="card-title">{data.name}</h2>
+                <h2 className="card-title">23465.56</h2>
                 <p className="card-text lead">
                 Monday, December 05, 20222
                 </p>
@@ -58,7 +61,7 @@ const SearchWeather = () =>  {
               <i className="fas fa-cloud fa-4x"></i>
               <h1 className="fw-bolder mb-5">35345.78 &deg;C</h1>
               <p className="lead fw-bolder mb-0">Cloud</p>
-              <p className="lead">33.01&deg;C | 35.01&deg;C</p>
+              <p className="lead">33.01&deg;C | 35.045&deg;C</p>
                 </div>
               </div>
             </div>
